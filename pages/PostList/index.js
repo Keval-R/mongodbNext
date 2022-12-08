@@ -96,7 +96,12 @@ export async function getServerSideProps(ctx) {
   const { req } = ctx;
   // let dev = process.env.NODE_ENV !== "production";
   // let { DEV_URL, PROD_URL } = process.env;
-  let response = await fetch(`${req.headers.host}/api/posts`);
+  let protocol = "https://";
+  let host = req ? req.headers.host : window.location.hostname;
+  if (host.indexOf("localhost") > -1) {
+    protocol = "http://";
+  }
+  let response = await fetch(`${protocol}${host}/api/posts`);
   let data = await response.json();
 
   return {
