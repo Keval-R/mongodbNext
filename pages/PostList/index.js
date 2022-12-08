@@ -69,8 +69,10 @@ const PostList = ({ posts }) => {
     });
   return (
     <>
-      <div style={{justifyContent:'right',display:'flex'}}>
-        <Link href={"./AddPost"}><h1>Add post</h1></Link>
+      <div style={{ justifyContent: "right", display: "flex" }}>
+        <Link href={"./AddPost"}>
+          <h1>Add post</h1>
+        </Link>
       </div>
       <main className={styles.main}>
         <table>
@@ -91,9 +93,10 @@ const PostList = ({ posts }) => {
 };
 
 export async function getServerSideProps(ctx) {
-  let dev = process.env.NODE_ENV !== "production";
-  let { DEV_URL, PROD_URL } = process.env;
-  let response = await fetch(`${dev ? DEV_URL : PROD_URL}/api/posts`);
+  const { req } = ctx;
+  // let dev = process.env.NODE_ENV !== "production";
+  // let { DEV_URL, PROD_URL } = process.env;
+  let response = await fetch(`${req.headers.host}/api/posts`);
   let data = await response.json();
 
   return {
